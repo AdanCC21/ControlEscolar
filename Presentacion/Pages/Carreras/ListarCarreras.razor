@@ -62,7 +62,8 @@
 							</td>
 							<td class="text-center">
 								<NavLink href="@($"ModificarCarrera/{carrera.IdCarrera}")" class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title="Edita los datos de la carrera"><i class="bi bi-pen"></i></NavLink>
-								<NavLink href="@($"AgregarMateriasCarrera/{carrera.IdCarrera}")" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" title="Agregar materias a la carrera"><i class="bi bi-layout-text-sidebar"></i></NavLink>
+								<NavLink href="@($"InsertarMateria/{carrera.IdCarrera}")" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" title="Agregar materias a la materia"><i class="bi bi-layout-text-sidebar"></i></NavLink>
+								<NavLink href="@($"ListarMateriasPorCarrera/{carrera.IdCarrera}")" class="btn btn-sm btn-outline-warning" data-toggle="tooltip" title="Mostrar materias de la carrera"><i class="bi bi-layout-text-sidebar"></i></NavLink>
 								<button class="btn btn-outline-danger btn-sm" data-toggle="tooltip" title="Borra los datos de la materia" @onclick="()=>BorrarCarrera(carrera.IdCarrera)"> <i class="bi bi-trash-fill"></i> </button>
 							</td>
 						</tr>

@@ -90,12 +90,14 @@
 @code {
 
     private E_Materia materia { get; set; } = new E_Materia();
+    private string msg = string.Empty;
+
     private string idCarreraString = String.Empty;
     private int idCarrera = 0;
-    private string msg = string.Empty;
+
+
     private async Task CL_InsertarMateria()
     {
-        // Validate and parse idCarreraString safely
         if (!int.TryParse(idCarreraString, out idCarrera))
         {
             msg = "Error: ID de carrera inválido.";
@@ -138,11 +140,6 @@
         }
     }
 
-    /// <summary>
-    /// Valida los datos de la carrera antes del registro.
-    /// </summary>
-    /// <param name="carrera">Instancia de E_Carrera a validar</param>
-    /// <returns>Cadena vacía si es válida, mensaje de error si no cumple validaciones</returns>
     protected string ValidaCarerra(E_Materia mat)
     {
         return string.Empty;

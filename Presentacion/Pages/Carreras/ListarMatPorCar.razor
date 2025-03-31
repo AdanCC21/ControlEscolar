@@ -1,4 +1,4 @@
-﻿@page "/ListarMaterias"
+﻿@page "/ListarMateriasPorCarrera/{idCarrera:int}"
 
 @using Servicios;
 @using Entidades.Modelos;
@@ -22,7 +22,7 @@
 			<button class="btn btn-outline-success" @onclick="()=>BuscarMateria(0)"><i class="bi bi-search"> Buscar</i></button>
 		</div>
 		<div class="col-2 align-content-end">
-			<NavLink href="InsertarMateria" class="btn btn-success"><i class="bi bi-plus-circle-fill"></i>&nbsp; Nueva Materia</NavLink>
+			<NavLink href="@($"InsertarMateria/{IdCarrera}")" class="btn btn-success"><i class="bi bi-plus-circle-fill"></i>&nbsp; Nueva Materia</NavLink>
 		</div>
 	</div>
 
@@ -69,45 +69,31 @@
 
 
 @code {
-	public int def = 0;
-	/// <summary>
-	/// Lista enumerable que contiene los registros de materias.
-	/// Se inicializa como una nueva lista vacía para evitar referencias nulas.
-	/// </summary>
+	[Parameter]
+	public int IdCarrera { get; set; }
+
 	private IEnumerable<E_Materia> LstMaterias { get; set; } = new List<E_Materia>();
 
-	/// <summary>
-	/// Almacena el criterio de búsqueda ingresado por el usuario.
-	/// Inicializado como string vacío para evitar valores nulos.
-	/// </summary>
 	private string criterioBusqueda { get; set; } = string.Empty;
 
-	/// <summary>
-	/// Mensaje utilizado para mostrar información al usuario (éxito, errores, etc.).
-	/// Inicializado como string vacío.
-	/// </summary>
 	private string msg = string.Empty;
 
-	/// <summary>
-	/// Método del ciclo de vida del componente que se ejecuta cuando el componente se inicializa.
-	/// Carga la lista inicial de materias desde el servicio.
-	/// </summary>
-	/// <returns>Tarea asíncrona</returns>
 	protected override async Task OnInitializedAsync()
 	{
-		LstMaterias = await materiaServ.ListarMaterias();
+
+		var temp = await materiaServ.ListarMaterias();
+
+		List<E_Materia> materias = new List<E_Materia>();
+		foreach(var t in temp)
+		{
+			if(t.IdCarrera == IdCarrera)
+			{
+				materias.Add(t);
+			}
+		}
+		LstMaterias = materias;
 	}
 
-	/// <summary>
-	/// Busca materias según el criterio proporcionado.
-	/// El criterio se aplica a múltiples campos (Clavemateria, Nombremateria, Aliasmateria).
-	/// </summary>
-	/// <param name="criterioBusqueda">Texto de búsqueda que se comparará con los campos de materia</param>
-	/// <returns>Tarea asíncrona</returns>
-	/// <remarks>
-	/// Actualiza la lista LstMaterias con los resultados de la búsqueda.
-	/// La búsqueda es case-insensitive y utiliza comparación parcial (LIKE).
-	/// </remarks>
 	private async Task BuscarMateria(int id)
 	{
 		E_Materia temp;
